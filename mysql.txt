@@ -1,0 +1,53 @@
+create database Emedicare;
+# Creation schema
+####################
+use Emedicare;
+################################
+create table UserRegistration(usr_Id int Primary key NOT NULL auto_increment, 
+first_Name varchar(50),
+last_Name varchar(50),
+gender varchar(10),
+dob date,
+email varchar(30),
+usr_password varchar(30),
+usr_role varchar(30));
+#creation table medicine
+###########################
+create table Medicine(medicine_Id  int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+medicine_name varchar(30),
+brand varchar(30),
+price DECIMAL(10,2),
+quantity int,
+manufacturing_date date,
+expiry_date date,
+medicine_description varchar(50));
+# creation table OrderDetails:-
+#############################
+create table OrderDetails(order_Id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+usr_Id int,
+address varchar(30),
+order_date date,
+order_quantity int,
+order_price DECIMAL(10,2),
+total_price DECIMAL(10,2),
+CONSTRAINT FK_usr_order FOREIGN KEY (usr_Id)
+REFERENCES UserRegistration(usr_Id));
+# creation table OrderMedicineDetails:-
+######################################
+CREATE TABLE OrderMedicineDetails ( orderId INT NOT NULL, MedicineId INT NOT NULL, 
+orderQuantity INT NOT NULL, PRIMARY KEY(orderId, MedicineId), 
+FOREIGN KEY (orderId) REFERENCES OrderDetails(order_Id), 
+FOREIGN KEY (MedicineId) REFERENCES Medicine(medicine_Id));
+#create payment table:-
+######################
+create table payment(payment_Id int Primary Key NOT NULL AUTO_INCREMENT,
+card_Type varchar(30),
+card_ExpiryDate date,
+card_Number varchar(30),
+card_Holder_Name varchar(30),
+cvv int);
+#Database Schema (schema.sql)  User Registration (Id(PK), FName, LName, Gender, DOB, email, password, role)  Medicine (MedicineId(PK),Name, Brand, Price, Quantity, expiry date, manufacturing date, description)  OrderMedicineDetails ( OrderMedicineId(PK), MedicineId(FK), OrderId(FK))  OrderDetails (OrderId(PK), userID, address, orderDate, Quantity, price, totalprice,)  Payment (paymentId(PK), cardType, cardNumber, cardExpiryDate, NameOnCard, cvv) 
+
+
+
+
